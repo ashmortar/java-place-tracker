@@ -23,11 +23,11 @@ public class App {
             String location = request.queryParams("location");
             String notes = request.queryParams("notes");
             Place myPlace = new Place(name, location, notes);
-            model.put("place", myPlace)
+            model.put("place", myPlace);
             return new ModelAndView(model, "success.hbs");
         }, new HandlebarsTemplateEngine());
 
-        //get: show all places
+        //get: show names with links to details
         get("/", (request, response) -> {
            Map<String, Object> model = new HashMap<>();
            ArrayList<Place> places = Place.getAll();
@@ -35,7 +35,15 @@ public class App {
            return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
 
-        //get: show and individual place
+        //get: show all places plus details
+        get("/places", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            ArrayList<Place> places = Place.getAll();
+            model.put("places", places);
+            return new ModelAndView(model, "all-places-with-details.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        //get: show an individual place
         get("/places/:id", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfPostToFind = Integer.parseInt(request.params("id"));
@@ -46,9 +54,23 @@ public class App {
 
         //get: show a form to update a place
         get("/places/:id/update", (request, response) -> {
-
-        }, new HandlebarsTemplateEngine()))
+            Map<String, Object> model = new HashMap<>();
+            int idOfPlaceToEdit = Integer.parseInt(request.params("id"));
+            Place editPlace = Place.findById(idOfPlaceToEdit);
+            model.put("editPlace", editPlace);
+            return new ModelAndView(model, "place-form.hbs");
+        }, new HandlebarsTemplateEngine());
 
         //post: process a form to update a place
+        post("/places/:id/update", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            String name = request.queryParams("name");
+            String location = request.queryParams("location");
+            String notes = request.queryParams("notes");
+            int idOfPlaceToEdit = Integer.parseInt(request.params("id"));
+            Place editPlace = Place.findById(idOfPlaceToEdit);
+            editPlace.update(name, location, notes);
+            return new ModelAndView(model, "success.hbs");
+        }, new HandlebarsTemplateEngine());
     }
 }

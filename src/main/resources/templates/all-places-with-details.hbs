@@ -1,9 +1,12 @@
 {{#partial "content"}}
-    <h1>Post list!</h1>
+    <h1>Place list!</h1>
     {{#if places}}
+        <h2>I been here:</h2>
         {{#each places}}
-            <p>I been here:</p>
-            <p>{{name}} <a href="/places/{{id}}"> see what you thought ...</a></p>
+            <p>{{name}}</p>
+            <p>{{location}}</p>
+            <p>{{notes}}</p>
+
         {{/each}}
     {{else}}
         <p>No places</p>

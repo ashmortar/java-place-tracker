@@ -3,7 +3,13 @@
     {{#if editPlace}}
         <h1>Edit this Post!</h1>
         <form action="/places/{{editPlace.id}}/update" method="post">
-            <label for="notes">Edit this posts's content</label>'
+            <label for="name">Place Name</label>
+            <input id="name" name="name" type="text" value="{{editPlace.name}}">
+
+            <label for="location">Where was it?</label>
+            <input id="location" name="location" type="text" value="{{editPlace.location}}">
+
+            <label for="notes">What did you think about it?</label>
             <input id="notes" name="notes" type="text" value="{{editPlace.notes}}">
     {{else}}
             <h1>Add a new Place!</h1>

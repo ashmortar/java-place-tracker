@@ -1,0 +1,13 @@
+{{#partial "content"}}
+    <p>Places:</p>
+    <p>{{ place.name }}</p>
+    <p> {{ place.location }}</p>
+    <p> {{ place.notes }}</p>
+    <h5>Post status:</h5>
+        <a href="/posts/{{place.id}}/update">Edit this post</a>
+        <br>
+        <a href="/posts/{{place.id}}/delete">DELETE this post (no undo)</a>
+    </p>
+{{/partial}}
+
+{{> layout.hbs}}
